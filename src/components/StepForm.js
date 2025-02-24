@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Steps } from 'antd';
+import { Button, Modal, Steps, notification } from 'antd';
 import {
   ScheduleOutlined,
   FileTextOutlined,
@@ -11,7 +11,6 @@ import { useForm } from 'antd/es/form/Form';
 import DefinitionStep from './DefinitionStep';
 import SelectedFieldsStep from './SelectedFieldsStep';
 import SettingsStep from './SettingsStep';
-import { notification } from 'antd';
 
 const { Step } = Steps;
 
@@ -21,11 +20,45 @@ const StepForm = ({ visible, onCancel }) => {
   const [formData, setFormData] = useState({});
   const [selectedFields, setSelectedFields] = useState([]);
 
-  const next = () => setCurrent(current + 1);
-  const prev = () => setCurrent(current - 1);
+  const next = () => {
+    // Eğer adım 1 (Selected Fields) ise, selectedFields kontrolü yap
+    if (current === 1 && selectedFields.length === 0) {
+      notification.error({
+        message: 'Validation Error',
+        description: 'Please select at least one field.',
+        placement: 'top',
+      });
+      return;
+    }
+
+    // Eğer adım 0 (Definition) veya adım 2 (Settings) ise form doğrulamasını yap
+    if (current === 0 || current === 2) {
+      form
+        .validateFields()
+        .then((values) => {
+          setFormData({ ...formData, ...values });
+          setCurrent(current + 1); // Adımı arttır
+        })
+        .catch((errorInfo) => {
+          console.log('Validation Failed:', errorInfo);
+          notification.error({
+            message: 'Validation Error',
+            description: errorInfo.errorFields[0]?.errors[0] || 'An error occurred.',
+            placement: 'top',
+          });
+        });
+    } else {
+      setCurrent(current + 1); // Diğer adımlar için direkt geçiş
+    }
+  };
+
+  const prev = () => {
+    setCurrent(current - 1); // Önceki adım
+  };
 
   const handleSubmit = () => {
     if (current === 1) {
+      // Selected Fields adımında seçili alan yoksa hata mesajı göster
       if (selectedFields.length === 0) {
         notification.error({
           message: 'Validation Error',
@@ -38,17 +71,16 @@ const StepForm = ({ visible, onCancel }) => {
       form
         .validateFields()
         .then((values) => {
-          onCancel();
-          setCurrent(0);
+          onCancel(); // Modalı kapat
+          setCurrent(0); // İlk adımda başlat
         })
         .catch((errorInfo) => {
           console.log('Validation Failed:', errorInfo);
           notification.error({
             message: 'Validation Error',
-            description: errorInfo[0],
+            description: errorInfo.errorFields[0]?.errors[0] || 'An error occurred.',
             placement: 'top',
           });
-          return;
         });
     }
   };

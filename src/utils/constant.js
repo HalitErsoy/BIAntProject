@@ -1,9 +1,18 @@
 export const SOURCE_DATA = [
-    { name: 'helpdesk.kocsistem.com.tr' },
-    { name: 'kocsistemdev.service-now.com' },
-    { name: 'kocsistem.service-now.com' },
+    {
+        "label": "helpdesk.kocsistem.com.tr",
+        "value": "helpdesk.kocsistem.com.tr"
+    },
+    {
+        "label": "kocsistemdev.service-now.com",
+        "value": "kocsistemdev.service-now.com"
+    },
+    {
+        "label": "kocsistem.service-now.com",
+        "value": "kocsistem.service-now.com"
+    }
 ];
- 
+
 
 export const SOURCE_DATA_MAP = {
     "datasource1": {

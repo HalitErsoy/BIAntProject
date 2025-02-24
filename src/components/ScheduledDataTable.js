@@ -39,7 +39,7 @@ const ScheduledDataTable = () => {
   const paginationConfig = {
     current: currentPage,
     pageSize: pageSize,
-    total: dataSource.length,
+    total: 10,//dataSource.length,
     onChange: (page, size) => {
       setCurrentPage(page);
       setPageSize(size);
