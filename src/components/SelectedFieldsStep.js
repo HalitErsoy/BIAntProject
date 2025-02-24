@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Divider, Table } from 'antd';
-import { getAllFieldNames } from "../../api";
-import SearchBar from '../common/SearchBar';
+import { getAllFieldNames } from "../api";
+import SearchBar from '../components/SearchBar';
 
 // Tablo sütunları
 const columns = [

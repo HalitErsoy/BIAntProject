@@ -3,10 +3,11 @@ import { Skeleton, Button } from 'antd';
 import { DiffOutlined } from '@ant-design/icons';
 import DataTable from './DataTable';
 import SearchBar from '../components/SearchBar';
-//import SkeletonLoader from '../common/SkeletonLoader';
+import StepForm from '../components/StepForm';
 import { getAllScheduledConfig } from '../api';
 
 const ScheduledDataTable = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);  // StepForm için modal görünürlük durumu
   const [dataSource, setDataSource] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -68,6 +69,14 @@ const ScheduledDataTable = () => {
     }
   };
 
+  const handleNewButtonClick = () => {
+    setIsModalVisible(true); // Button'a tıklandığında formu aç
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false); // Formu kapat
+  };
+
   return (
     <div className="mx-5">
       {loading ? (
@@ -78,7 +87,8 @@ const ScheduledDataTable = () => {
             <Button
               type="primary"
               icon={<DiffOutlined />}
-              size="large"
+              size="medium"
+              onClick={handleNewButtonClick}
             >
               New
             </Button>
@@ -91,6 +101,12 @@ const ScheduledDataTable = () => {
             columns={columns}
             paginationConfig={paginationConfig}
             loading={loading}
+          />
+
+          {/* StepForm burada modal olarak kullanılıyor */}
+          <StepForm
+            visible={isModalVisible}
+            onCancel={handleCancel}  // Formu kapatma işlevi
           />
         </>
       )}

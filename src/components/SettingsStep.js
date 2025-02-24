@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { ProfileOutlined, CloudServerOutlined, TableOutlined, DatabaseOutlined } from '@ant-design/icons';
 
-import '../scheduledDataTable/assets/style.css';
+//import '../scheduledDataTable/assets/style.css';
 
 let cachedData = null;
 

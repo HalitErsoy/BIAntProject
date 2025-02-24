@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Divider, Form, Input, Row, Col, Select, Skeleton } from 'antd';
-import { getAllTableName } from "../../api";
-import { SOURCE_DATA, SOURCE_DATA_MAP } from "../../utils/constant";
+import { getAllTableName } from "../api";
+import { SOURCE_DATA, SOURCE_DATA_MAP } from "../utils/constant";
 
 const DefinitionStep = ({ form, onValuesChange, onFieldDataChange, onTableChange }) => {
   const [loading, setLoading] = useState(false);
