@@ -57,32 +57,7 @@ const StepForm = ({ visible, onCancel }) => {
   };
 
   const handleSubmit = () => {
-    if (current === 1) {
-      // Selected Fields adımında seçili alan yoksa hata mesajı göster
-      if (selectedFields.length === 0) {
-        notification.error({
-          message: 'Validation Error',
-          description: 'Please select at least one field.',
-          placement: 'top',
-        });
-        return;
-      }
-    } else {
-      form
-        .validateFields()
-        .then((values) => {
-          onCancel(); // Modalı kapat
-          setCurrent(0); // İlk adımda başlat
-        })
-        .catch((errorInfo) => {
-          console.log('Validation Failed:', errorInfo);
-          notification.error({
-            message: 'Validation Error',
-            description: errorInfo.errorFields[0]?.errors[0] || 'An error occurred.',
-            placement: 'top',
-          });
-        });
-    }
+
   };
 
   const steps = [
